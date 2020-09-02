@@ -196,6 +196,27 @@ type (
 		UpdateTime       *time.Time            `json:"update_time,omitempty"`
 		ExpirationTime   *time.Time            `json:"expiration_time,omitempty"`
 		Links            []Link                `json:"links,omitempty"`
+		PurchaseUnits []PurchaseUnitAuthorization  `json:"purchase_units,omitempty"`
+	}
+
+	PurchaseUnitAuthorization struct {
+		ReferenceID string   `json:"reference_id"`
+		Payments    PurchaseUnitAuthorizationPayment `json:"payments"`
+	}
+
+	PurchaseUnitAuthorizationPayment struct {
+		Authorizations []PurchaseUnitAuthorizationPaymentAuthorization `json:"authorizations"`
+	}
+
+	PurchaseUnitAuthorizationPaymentAuthorization struct {
+		Status           string           `json:"status"`
+		ID               string           `json:"id"`
+		Amount           Amount           `json:"amount"`
+		SellerProtection SellerProtection `json:"seller_protection"`
+		ExpirationTime   time.Time        `json:"expiration_time"`
+		Links            []Link          `json:"links"`
+		CreateTime       time.Time        `json:"create_time"`
+		UpdateTime       time.Time        `json:"update_time"`
 	}
 
 	// AuthorizeOrderResponse .
