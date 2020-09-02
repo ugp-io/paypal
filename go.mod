@@ -1,6 +1,4 @@
-module github.com/plutov/paypal/v3
-
-replace github.com/plutov/paypal/v3 => github.com/ugp-io/paypal/v3
+module github.com/ugp-io/paypal/v3
 
 go 1.12
 
