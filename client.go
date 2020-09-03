@@ -97,8 +97,9 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 	if c.returnRepresentation {
 		req.Header.Set("Prefer", "return=representation")
 	}
-
+	fmt.Println(req)
 	resp, err = c.Client.Do(req)
+	fmt.Println(err)
 	c.log(req, resp)
 
 	if err != nil {
@@ -109,7 +110,7 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		errResp := &ErrorResponse{Response: resp}
 		data, err = ioutil.ReadAll(resp.Body)
-
+		fmt.Println(err)
 		if err == nil && len(data) > 0 {
 			json.Unmarshal(data, errResp)
 		}
@@ -169,14 +170,10 @@ func (c *Client) NewRequest(method, url string, payload interface{}) (*http.Requ
 	if payload != nil {
 		b, err := json.Marshal(&payload)
 		if err != nil {
-			fmt.Println(err)
 			return nil, err
 		}
 		buf = bytes.NewBuffer(b)
 	}
-	fmt.Println(method)
-	fmt.Println(url)
-	fmt.Println(buf)
 	return http.NewRequest(method, url, buf)
 }
 
