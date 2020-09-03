@@ -1,6 +1,10 @@
 package paypal
 
-import "fmt"
+import (
+	"fmt"
+	"bytes"
+	"encoding/json"
+)	
 
 // GetOrder retrieves order by ID
 // Endpoint: GET /v2/checkout/orders/ID
@@ -45,10 +49,13 @@ func (c *Client) CreateOrder(intent string, purchaseUnits []PurchaseUnitRequest,
 
 // UpdateOrder updates the order by ID
 // Endpoint: PATCH /v2/checkout/orders/ID
-func (c *Client) UpdateOrder(orderID string, purchaseUnits []PurchaseUnitRequest) (*Order, error) {
-	order := &Order{}
+func (c *Client) UpdateOrder(orderID string, patchData []Patch) (*Order, error) {
 
-	req, err := c.NewRequest("PATCH", fmt.Sprintf("%s%s%s", c.APIBase, "/v2/checkout/orders/", orderID), purchaseUnits)
+	order := &Order{}
+	jsonData, err := json.Marshal(patchData)
+	buf := bytes.NewBuffer(jsonData)
+
+	req, err := c.NewRequest("PATCH", fmt.Sprintf("%s%s%s", c.APIBase, "/v2/checkout/orders/", orderID), buf)
 	if err != nil {
 		return order, err
 	}
