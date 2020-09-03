@@ -169,10 +169,14 @@ func (c *Client) NewRequest(method, url string, payload interface{}) (*http.Requ
 	if payload != nil {
 		b, err := json.Marshal(&payload)
 		if err != nil {
+			fmt.Println(err)
 			return nil, err
 		}
 		buf = bytes.NewBuffer(b)
 	}
+	fmt.Println(method)
+	fmt.Println(url)
+	fmt.Println(buf)
 	return http.NewRequest(method, url, buf)
 }
 
