@@ -97,9 +97,8 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 	if c.returnRepresentation {
 		req.Header.Set("Prefer", "return=representation")
 	}
-	fmt.Println(req)
+
 	resp, err = c.Client.Do(req)
-	fmt.Println(err)
 	c.log(req, resp)
 
 	if err != nil {
@@ -110,7 +109,7 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		errResp := &ErrorResponse{Response: resp}
 		data, err = ioutil.ReadAll(resp.Body)
-		fmt.Println(err)
+
 		if err == nil && len(data) > 0 {
 			json.Unmarshal(data, errResp)
 		}
@@ -120,15 +119,13 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 	if v == nil {
 		return nil
 	}
-	fmt.Println("1")
+
 	if w, ok := v.(io.Writer); ok {
 		io.Copy(w, resp.Body)
 		return nil
 	}
-	fmt.Println("2")
-	jsonErr := json.NewDecoder(resp.Body).Decode(v)
-	fmt.Println(jsonErr)
-	return jsonErr
+
+	return json.NewDecoder(resp.Body).Decode(v)
 }
 
 // SendWithAuth makes a request to the API and apply OAuth2 header automatically.
