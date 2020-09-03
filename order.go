@@ -45,19 +45,17 @@ func (c *Client) CreateOrder(intent string, purchaseUnits []PurchaseUnitRequest,
 
 // UpdateOrder updates the order by ID
 // Endpoint: PATCH /v2/checkout/orders/ID
-func (c *Client) UpdateOrder(orderID string, patchData []Patch) (*Order, error) {
-	order := &Order{}
-
+func (c *Client) UpdateOrder(orderID string, patchData []Patch) (error) {
 	req, err := c.NewRequest("PATCH", fmt.Sprintf("%s%s%s", c.APIBase, "/v2/checkout/orders/", orderID), patchData)
 	if err != nil {
-		return order, err
+		return err
 	}
 
-	if err = c.SendWithAuth(req, order); err != nil {
-		return order, err
+	if err = c.SendWithAuth(req, nil); err != nil {
+		return err
 	}
 
-	return order, nil
+	return nil
 }
 
 // AuthorizeOrder - https://developer.paypal.com/docs/api/orders/v2/#orders_authorize
