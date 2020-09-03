@@ -120,13 +120,15 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 	if v == nil {
 		return nil
 	}
-
+	fmt.Println("1")
 	if w, ok := v.(io.Writer); ok {
 		io.Copy(w, resp.Body)
 		return nil
 	}
-
-	return json.NewDecoder(resp.Body).Decode(v)
+	fmt.Println("2")
+	jsonErr := json.NewDecoder(resp.Body).Decode(v)
+	fmt.Println(jsonErr)
+	return jsonErr
 }
 
 // SendWithAuth makes a request to the API and apply OAuth2 header automatically.
