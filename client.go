@@ -45,7 +45,7 @@ func (c *Client) GetAccessToken() (*TokenResponse, error) {
 	// Set Token fur current Client
 	if response.Token != "" {
 		c.Token = response
-		c.tokenExpiresAt = time.Now().Add(time.Duration(response.ExpiresIn) * time.Second)
+		c.tokenExpiresAt = time.Now().Add(time.Duration(response.ExpiresIn) * time.Second).Round(0)
 	}
 
 	return response, err
