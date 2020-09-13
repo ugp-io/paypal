@@ -151,6 +151,7 @@ func (c *Client) SendWithAuth(req *http.Request, v interface{}) error {
 	fmt.Println(c.Token)
 	if c.Token != nil {
 		fmt.Println(c.tokenExpiresAt)
+		fmt.Println(time.Now())
 		fmt.Println(c.tokenExpiresAt.Sub(time.Now()))
 		if !c.tokenExpiresAt.IsZero() && c.tokenExpiresAt.Sub(time.Now()) < RequestNewTokenBeforeExpiresIn {
 			// c.Token will be updated in GetAccessToken call
