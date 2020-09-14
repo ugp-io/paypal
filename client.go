@@ -148,11 +148,7 @@ func (c *Client) SendWithAuth(req *http.Request, v interface{}) error {
 	c.Lock()
 	// Note: Here we do not want to `defer c.Unlock()` because we need `c.Send(...)`
 	// to happen outside of the locked section.
-	fmt.Println(c.Token)
 	if c.Token != nil {
-		fmt.Println(c.tokenExpiresAt)
-		fmt.Println(time.Now())
-		fmt.Println(c.tokenExpiresAt.Sub(time.Now()))
 		if !c.tokenExpiresAt.IsZero() && c.tokenExpiresAt.Sub(time.Now()) < RequestNewTokenBeforeExpiresIn {
 			// c.Token will be updated in GetAccessToken call
 			if _, err := c.GetAccessToken(); err != nil {
