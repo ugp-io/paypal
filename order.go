@@ -138,8 +138,8 @@ func (c *Client) RefundCaptureWithPaypalRequestId(
 	return refund, nil
 }
 
-func (c *Client) GetCapture(captureID string) (*Capture, error) {
-	capture := &Capture{}
+func (c *Client) GetCapture(captureID string) (*Resource, error) {
+	capture := &Resource{}
 
 	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s%s", c.APIBase, "/v2/payments/captures/", captureID), nil)
 	if err != nil {
