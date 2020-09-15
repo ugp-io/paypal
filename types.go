@@ -335,9 +335,11 @@ type (
 	Capture struct {
 		Amount         *Amount    `json:"amount,omitempty"`
 		IsFinalCapture bool       `json:"is_final_capture"`
+		FinalCapture bool       `json:"final_capture"`
 		CreateTime     *time.Time `json:"create_time,omitempty"`
 		UpdateTime     *time.Time `json:"update_time,omitempty"`
 		State          string     `json:"state,omitempty"`
+		Status          string     `json:"status,omitempty"`
 		ParentPayment  string     `json:"parent_payment,omitempty"`
 		ID             string     `json:"id,omitempty"`
 		Links          []Link     `json:"links,omitempty"`
